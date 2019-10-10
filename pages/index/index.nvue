@@ -1,0 +1,43 @@
+<template>
+	<view>
+		<button type="primary" @tap="openLocation">查看位置</button>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				location: {
+					longitude: '116.39747',
+					latitude: '39.9085',
+					name: '苏州',
+					address: '工业园区'
+				},
+			}
+		},
+		methods: {
+			openLocation() {
+				uni.getLocation({
+					geocode: true,
+					type: 'gcj02',
+					success: (location)=>{
+						uni.openLocation({
+							longitude: Number(location.longitude),
+							latitude: Number(location.latitude),
+							name: location.address.poiName,
+							address: location.address.province + location.address.city + location.address.district + location.address.street + location.address.streetNum
+						})
+					}
+				})
+				
+			}
+		}
+	}
+</script>
+
+<style>
+	.uni-list-cell-left {
+		padding: 0 30upx;
+	}
+</style>
